@@ -12,6 +12,12 @@ class IntentEnum(Enum):
     INFORMATIONAL = "informational"
     COMPARISON = "comparison"
 
+class StatusEnum(Enum):
+    SUCCESS = "success"
+    SERVER_ERROR = "server_error"
+    TIMEOUT = "timeout"
+    CLIENT_ERROR = "client_error"
+
 class Prompt(BaseModel):
     model_config = ConfigDict(strict=True)
 
@@ -28,11 +34,18 @@ class PromptExec(BaseModel):
     execution_id: int
     provider: str
     model: str
-    response_code: int
+    
+class Attempt(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    attempt_id: int
+    execution_id: int
+    status: StatusEnum
 
 class RawResult(BaseModel):
     model_config = ConfigDict(strict=True)
 
     result_id: int
-    execution_id: int
+    attempt_id: int
     content: str
+    sequence_number: int
