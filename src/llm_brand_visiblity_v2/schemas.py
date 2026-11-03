@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from enum import Enum
 from datetime import datetime
 from pydantic import HttpUrl, ConfigDict, BaseModel
@@ -63,3 +64,29 @@ class BrandInput(BaseModel):
     products: list[str] | None = None
     services: list[str] | None = None
     niche: str
+
+    @field_validator("brand_name", "niche", mode="before")
+    @classmethod
+    def str_validation(cls, x):
+        x = x.strip()
+        if len(x) == 0:
+            raise ValueError("Field name can not be empty")
+        return x
+    
+    @field_validator("competitors", "products", "services", mode="before")
+    @classmethod
+    def list_validation(cls, x):
+        clean_list = []
+
+        if x is None:
+            return None
+
+        for i in range(len(x)):
+            c = x[i].strip()
+            if len(c) == 0:
+                raise ValueError("List item can not be empty")
+            if len(c) > 350:
+                raise ValueError("List item too long")
+            clean_list.append(c)
+
+        return clean_list
