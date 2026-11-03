@@ -1,7 +1,6 @@
-from datetime import datetime
 from enum import Enum
-from pydantic import ConfigDict
-from pydantic import BaseModel
+from datetime import datetime
+from pydantic import HttpUrl, ConfigDict, BaseModel
 
 class TypeEnum(Enum):
     BRANDED = "branded"
@@ -43,9 +42,9 @@ class Attempt(BaseModel):
     execution_id: int
     attempt_number: int
     status: StatusEnum
-    response_code: int | None
+    response_code: int | None = None
     started_at: datetime
-    finished_at: datetime | None
+    finished_at: datetime | None = None
 
 class RawResult(BaseModel):
     model_config = ConfigDict(strict=True)
@@ -54,3 +53,13 @@ class RawResult(BaseModel):
     attempt_id: int
     content: str
     sequence_number: int
+
+class BrandInput(BaseModel):
+    model_config = ConfigDict(strict=True)
+    
+    brand_name: str
+    website: HttpUrl
+    competitors: list[str] | None = None
+    products: list[str] | None = None
+    services: list[str] | None = None
+    niche: str
