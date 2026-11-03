@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 from pydantic import ConfigDict
 from pydantic import BaseModel
@@ -40,7 +41,11 @@ class Attempt(BaseModel):
 
     attempt_id: int
     execution_id: int
+    attempt_number: int
     status: StatusEnum
+    response_code: int | None
+    started_at: datetime
+    finished_at: datetime | None
 
 class RawResult(BaseModel):
     model_config = ConfigDict(strict=True)
