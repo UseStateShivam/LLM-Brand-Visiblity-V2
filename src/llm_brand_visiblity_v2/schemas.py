@@ -81,6 +81,9 @@ class BrandInput(BaseModel):
         if x is None:
             return None
 
+        if len(x) == 0:
+            raise ValueError("List can not be empty")
+
         for i in range(len(x)):
             c = x[i].strip()
             if len(c) == 0:
