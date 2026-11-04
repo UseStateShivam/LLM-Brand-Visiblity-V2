@@ -75,21 +75,30 @@ class BrandInput(BaseModel):
     
     @field_validator("competitors", "products", "services", mode="before")
     @classmethod
-    def list_validation(cls, x):
+    def list_validation(cls, x, info):
         clean_list = []
 
         if x is None:
             return None
 
+        if not isinstance(x, list):
+            raise ValueError("Input must be a list")
+
         if len(x) == 0:
             raise ValueError("List can not be empty")
 
         for i in range(len(x)):
+            if not isinstance(x[i], str):
+                raise ValueError("List item must be a string")
+    
             c = x[i].strip()
             if len(c) == 0:
                 raise ValueError("List item can not be empty")
             if len(c) > 350:
-                raise ValueError("List item too long")
+                raise ValueError("List item can not have more than 350 characters")
             clean_list.append(c)
+
+        if info.field_name != "competitors" and len(clean_list) > 5:
+            raise ValueError("List can not have more than 5 items")
 
         return clean_list
