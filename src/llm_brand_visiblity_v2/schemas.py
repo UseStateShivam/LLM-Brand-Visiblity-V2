@@ -19,6 +19,11 @@ class StatusEnum(Enum):
     TIMEOUT = "timeout"
     CLIENT_ERROR = "client_error"
 
+class ContextEnum(Enum):
+    BRANDLEVEL = "brand_level" 
+    PRODUCTLEVEL = "product_level" 
+    SERVICELEVEL = "service_level" 
+
 class Prompt(BaseModel):
     model_config = ConfigDict(strict=True)
 
