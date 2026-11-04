@@ -1,5 +1,5 @@
 from llm_brand_visiblity_v2.core.prompt_gen.builder import BuildPrompts
-from llm_brand_visiblity_v2.ingestion.pipeline import run_ingestion_pipeline
+from llm_brand_visiblity_v2.ingestion.input_pipeline import run_ingestion_pipeline
 
 def test_ingestion_and_prompt_gen():
     input_model = run_ingestion_pipeline()
