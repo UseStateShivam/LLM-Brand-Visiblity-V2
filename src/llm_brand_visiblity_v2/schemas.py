@@ -30,7 +30,7 @@ class Prompt(BaseModel):
     prompt_id: int
     prompt_type: TypeEnum
     content: str
-    category: str
+    context: str
     intent: IntentEnum  
 
 class PromptExec(BaseModel):
