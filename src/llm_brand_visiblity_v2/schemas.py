@@ -51,6 +51,10 @@ class Attempt(BaseModel):
     response_code: int | None = None
     started_at: datetime
     finished_at: datetime | None = None
+    latency: float | None = None
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    total_tokens: int | None = None
 
 class RawResult(BaseModel):
     model_config = ConfigDict(strict=True)
