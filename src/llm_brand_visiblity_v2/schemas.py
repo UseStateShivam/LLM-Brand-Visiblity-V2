@@ -56,6 +56,15 @@ class Attempt(BaseModel):
     output_tokens: int | None = None
     total_tokens: int | None = None
 
+class AdapterResponse(BaseModel):
+    model_config = ConfigDict(strict=True)
+    
+    content: str
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    total_tokens: int | None = None
+    finished_at: datetime
+
 class RawResult(BaseModel):
     model_config = ConfigDict(strict=True)
 
