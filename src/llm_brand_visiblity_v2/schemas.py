@@ -47,7 +47,7 @@ class Attempt(BaseModel):
     attempt_id: int
     execution_id: int
     attempt_number: int
-    status: StatusEnum
+    status: StatusEnum | None = None
     response_code: int | None = None
     started_at: datetime
     finished_at: datetime | None = None
