@@ -15,8 +15,9 @@ from llm_brand_visiblity_v2.core.llm_exec.response_handler import ResponseHandle
 from llm_brand_visiblity_v2.core.llm_exec.adapters.gemini_adapter import GeminiAdapter
 
 class ExecutionManager:
-    def execute(self, prompts_list: list[Prompt]) -> tuple[list[Attempt], list[RawResult]]:
+    def execute(self, prompts_list: list[Prompt]) -> tuple[list[PromptExec], list[Attempt], list[RawResult]]:
         raw_results = []
+        prompt_executions = []
         attempts_list = []
         failed_prompts_metadata = []
 
@@ -54,6 +55,7 @@ class ExecutionManager:
                         provider= "Gemini",
                         model= "gemini-3.5-flash"
                     )
+                    prompt_executions.append(execution)
                     attempt = Attempt(
                         attempt_id= uuid.uuid4().int,
                         execution_id= execution.execution_id,
@@ -103,7 +105,7 @@ class ExecutionManager:
         passes += 1
         prompt_looping(failed_prompts_list=failed_prompts_metadata)
 
-        return attempts_list, raw_results
+        return prompt_executions, attempts_list, raw_results
 
 if __name__ == "__main__":
     execution_manager = ExecutionManager()
