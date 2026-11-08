@@ -1,5 +1,3 @@
-from llm_brand_visiblity_v2.schemas import StatusEnum
-from llm_brand_visiblity_v2.schemas import PromptExec
 import uuid
 import time
 from datetime import timezone
@@ -7,6 +5,11 @@ from datetime import datetime
 from llm_brand_visiblity_v2.schemas import Prompt
 from llm_brand_visiblity_v2.schemas import Attempt
 from llm_brand_visiblity_v2.schemas import RawResult
+from llm_brand_visiblity_v2.schemas import TypeEnum
+from llm_brand_visiblity_v2.schemas import IntentEnum
+from llm_brand_visiblity_v2.schemas import StatusEnum
+from llm_brand_visiblity_v2.schemas import PromptExec
+from llm_brand_visiblity_v2.schemas import ContextEnum
 from llm_brand_visiblity_v2.core.llm_exec.response_handler import ResponseHandler
 from llm_brand_visiblity_v2.core.llm_exec.adapters.gemini_adapter import GeminiAdapter
 
@@ -59,4 +62,15 @@ class ExecutionManager:
 
 if __name__ == "__main__":
     execution_manager = ExecutionManager()
-    print(execution_manager.execute(to be tested))
+
+    prompt = Prompt(
+        prompt_id= 1,
+        intent= IntentEnum.BUYING,
+        context= ContextEnum.BRANDLEVEL,
+        prompt_type= TypeEnum.BRANDED,
+        content= "Which nike shoe shall I buy for running?"
+    )
+
+    prompts_list = [prompt]
+
+    print(execution_manager.execute(prompts_list))
