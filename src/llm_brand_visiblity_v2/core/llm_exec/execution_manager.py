@@ -1,3 +1,4 @@
+from google.genai import errors
 import uuid
 import time
 from datetime import timezone
@@ -42,9 +43,18 @@ class ExecutionManager:
             
             try:
                 adapter_response = gemnini_adapter.execute(prompt)
-            except RuntimeError as e:
-                print("Prompt with prompt_id =", prompt.prompt_id, "failed: ", e)
-                attempt.status = StatusEnum.CLIENT_ERROR
+            except errors.ClientError as e:
+                    attempt.status = StatusEnum.CLIENT_ERROR
+                    print("Prompt with prompt_id =", prompt.prompt_id, "failed: ", e)
+            except errors.ServerError as e:
+                    attempt.status = StatusEnum.SERVER_ERROR
+                    print("Prompt with prompt_id =", prompt.prompt_id, "failed: ", e)
+            except TimeoutError as e:
+                    attempt.status = StatusEnum.TIMEOUT
+                    print("Prompt with prompt_id =", prompt.prompt_id, "failed: ", e)
+            except errors.APIError as e:
+                    attempt.status = StatusEnum.CLIENT_ERROR
+                    print("Prompt with prompt_id =", prompt.prompt_id, "failed: ", e)
             else:
                 attempt.status = StatusEnum.SUCCESS
                 attempt.input_tokens = adapter_response.input_tokens
