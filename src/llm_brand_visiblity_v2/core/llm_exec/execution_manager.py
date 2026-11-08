@@ -110,40 +110,40 @@ if __name__ == "__main__":
 
     prompts_list = [
     # Prompt 1: succeeds on first attempt
-    Prompt(
-        prompt_id=1,
-        intent=IntentEnum.BUYING,
-        context=ContextEnum.BRANDLEVEL,
-        prompt_type=TypeEnum.BRANDED,
-        content="Which Nike running shoe is best for beginners?"
-    ),
+        Prompt(
+            prompt_id=1,
+            intent=IntentEnum.BUYING,
+            context=ContextEnum.BRANDLEVEL,
+            prompt_type=TypeEnum.BRANDED,
+            content="Which Nike running shoe is best for beginners?"
+        ),
 
-    # Prompt 2: succeeds on first attempt
-    Prompt(
-        prompt_id=2,
-        intent=IntentEnum.INFORMATIONAL,
-        context=ContextEnum.PRODUCTLEVEL,
-        prompt_type=TypeEnum.BRANDED,
-        content="What are the features of Nike Pegasus running shoes?"
-    ),
+        # Prompt 2: succeeds on first attempt
+        Prompt(
+            prompt_id=2,
+            intent=IntentEnum.INFORMATIONAL,
+            context=ContextEnum.PRODUCTLEVEL,
+            prompt_type=TypeEnum.BRANDED,
+            content="What are the features of Nike Pegasus running shoes?"
+        ),
 
-    # Prompt 3: fails once, succeeds on retry
-    Prompt(
-        prompt_id=3,
-        intent=IntentEnum.COMPARISON,
-        context=ContextEnum.PRODUCTLEVEL,
-        prompt_type=TypeEnum.COMPETITOR,
-        content="Compare Nike Pegasus with Adidas Ultraboost."
-    ),
+        # Prompt 3: fails once, succeeds on retry
+        Prompt(
+            prompt_id=3,
+            intent=IntentEnum.COMPARISON,
+            context=ContextEnum.PRODUCTLEVEL,
+            prompt_type=TypeEnum.COMPETITOR,
+            content="Compare Nike Pegasus with Adidas Ultraboost."
+        ),
 
-    # Prompt 4: fails on both attempts
-    Prompt(
-        prompt_id=4,
-        intent=IntentEnum.BUYING,
-        context=ContextEnum.PRODUCTLEVEL,
-        prompt_type=TypeEnum.UNBRANDED,
-        content="Which running shoes are best for daily road running?"
-    )
-]
+        # Prompt 4: fails on both attempts
+        Prompt(
+            prompt_id=4,
+            intent=IntentEnum.BUYING,
+            context=ContextEnum.PRODUCTLEVEL,
+            prompt_type=TypeEnum.UNBRANDED,
+            content="Which running shoes are best for daily road running?"
+        )
+    ]
 
     print(execution_manager.execute(prompts_list))
