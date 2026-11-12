@@ -24,6 +24,10 @@ class ContextEnum(Enum):
     PRODUCTLEVEL = "product_level" 
     SERVICELEVEL = "service_level" 
 
+class ExtractionMethodEnum(Enum):
+    NER = "ner"
+    DICT = "dictionary"
+
 class Prompt(BaseModel):
     model_config = ConfigDict(strict=True)
 
@@ -126,3 +130,13 @@ class BrandInput(BaseModel):
             raise ValueError("List can not have more than 5 items")
 
         return clean_list
+
+class ExtractedEntity(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    prompt_response: NormalizedPromptResponse
+    entity_text: str
+    entity_type: str
+    start_position: int
+    end_position: int
+    extraction_method: ExtractionMethodEnum
