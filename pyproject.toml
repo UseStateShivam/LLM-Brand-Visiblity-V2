@@ -12,6 +12,7 @@ dependencies = [
     "openai>=3.46.0",
     "pydantic>=2.14.2",
     "python-dotenv>=1.2.4",
+    "spacy>=3.8.18",
 ]
 
 [project.scripts]
