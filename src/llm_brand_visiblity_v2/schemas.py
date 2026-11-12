@@ -73,6 +73,12 @@ class RawResult(BaseModel):
     content: str
     sequence_number: int
 
+class NormalizedPromptResponse(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    prompt: Prompt
+    response: str
+
 class BrandInput(BaseModel):
     model_config = ConfigDict(strict=True)
     
