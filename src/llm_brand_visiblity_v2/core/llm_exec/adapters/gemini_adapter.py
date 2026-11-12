@@ -18,9 +18,10 @@ class GeminiAdapter(BaseAdapter):
         self.client = client
 
     def execute(self, prompt: Prompt) -> AdapterResponse:
+        model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
         response = self.client.models.generate_content(
-            model = "gemini-3.5-flash",
-            contents = prompt.content 
+            model=model_name,
+            contents=prompt.content 
         )
 
         adapter_response = AdapterResponse(

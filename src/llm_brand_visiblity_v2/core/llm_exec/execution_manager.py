@@ -23,13 +23,15 @@ class ExecutionManager:
         gemini_adapter = GeminiAdapter()
         response_handler_instance = ResponseHandler()
 
+        model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+
         for sequence_number, prompt in enumerate(prompts_list):
 
             execution = PromptExec(
                 prompt_id=prompt.prompt_id,
                 execution_id=uuid.uuid4().int,
                 provider="Gemini",
-                model="gemini-3.5-flash"
+                model=model_name
             )
 
             attempts_list = []

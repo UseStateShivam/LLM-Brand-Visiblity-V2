@@ -90,7 +90,12 @@ class PreprocessText:
 
             whitespace_normalized = normalized_newlines.strip()
 
-            # HTML cleanup - next stage
-            # Text validation - next stage
+            normalized_pairs.append(
+                NormalizedPromptResponse(
+                    response_id=len(normalized_pairs) + 1,
+                    prompt=prompt,
+                    response=whitespace_normalized
+                )
+            )
 
         return normalized_pairs
