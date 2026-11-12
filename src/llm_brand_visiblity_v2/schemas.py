@@ -28,6 +28,38 @@ class ExtractionMethodEnum(Enum):
     NER = "ner"
     DICT = "dictionary"
 
+class CanonicalEntityTypeEnum(Enum):
+    BRAND = "brand"
+    COMPETITOR = "competitor"
+    PRODUCT = "product"
+    SERVICE = "service"
+
+
+class ResolutionStatusEnum(Enum):
+    RESOLVED = "resolved"
+    UNRESOLVED = "unresolved"
+
+
+class SentimentLabelEnum(Enum):
+    POSITIVE = "positive"
+    NEGATIVE = "negative"
+    NEUTRAL = "neutral"
+    MIXED = "mixed"
+
+
+class RecommendationStatusEnum(Enum):
+    RECOMMENDED = "recommended"
+    NOT_RECOMMENDED = "not_recommended"
+    NOT_STATED = "not_stated"
+
+
+class ComparisonOutcomeEnum(Enum):
+    TARGET_FAVORED = "target_favored"
+    COMPETITOR_FAVORED = "competitor_favored"
+    EQUAL = "equal"
+    COMPARISON_MENTIONED = "comparison_mentioned"
+    NOT_APPLICABLE = "not_applicable"
+
 class Prompt(BaseModel):
     model_config = ConfigDict(strict=True)
 
@@ -80,6 +112,7 @@ class RawResult(BaseModel):
 class NormalizedPromptResponse(BaseModel):
     model_config = ConfigDict(strict=True)
 
+    response_id: int
     prompt: Prompt
     response: str
 
@@ -140,3 +173,35 @@ class ExtractedEntity(BaseModel):
     start_position: int
     end_position: int
     extraction_method: ExtractionMethodEnum
+
+class ResolvedEntity(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    source_entity: ExtractedEntity
+    canonical_name: str | None = None
+    canonical_type: CanonicalEntityTypeEnum | None = None
+    resolution_status: ResolutionStatusEnum
+
+class EntityAssessment(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    entity: ResolvedEntity
+    sentiment: SentimentLabelEnum
+    recommendation: RecommendationStatusEnum
+    comparison: ComparisonOutcomeEnum
+    rank_position: int | None = None
+
+class CitationMention(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    url: str
+    start_position: int
+    end_position: int
+
+class ResponseAnalysis(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    response_id: int
+    prompt_response: NormalizedPromptResponse
+    entity_assessments: list[EntityAssessment]
+    citations: list[CitationMention]
