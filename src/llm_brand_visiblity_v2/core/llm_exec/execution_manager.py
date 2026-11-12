@@ -1,5 +1,6 @@
 import uuid
 import time
+import os
 from datetime import timezone, datetime
 from google.genai import errors
 from llm_brand_visiblity_v2.schemas import (
